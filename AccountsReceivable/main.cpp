@@ -37,13 +37,6 @@ int main() {
     ofstream masterFileStream;
     
     //
-    //  Variables for processing records
-    //
-    
-    Record record = Record();
-    Customer customer = Customer();
-    
-    //
     //  Get the transaction type
     //
     
@@ -73,9 +66,14 @@ int main() {
     //  Process the transactions
     //
     
-    
-    
     while (transactionFileStream >> transactionType) {
+        
+        //
+        //  Variables for processing records
+        //
+        
+        Record record;
+        Customer customer;
         
         //
         //  Store the appropriate record type for later.
@@ -123,7 +121,6 @@ int main() {
             if(!(transactionFileStream >> record.itemQuantity)){
                 throw runtime_error("Can't read item quantity.");
             }
-            
             
             if(!(transactionFileStream >> record.cashAmount)){
                 throw runtime_error("Can't read price per unit.");
