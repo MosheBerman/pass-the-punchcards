@@ -24,7 +24,6 @@ using namespace std;
 
 bool openInputStream(ifstream &, string); 
 bool openOutputStream(ofstream &, string);
-void readNCharactersFromStreamIntoArray(ifstream &, int, char*);
 
 int main() {
     
@@ -117,7 +116,9 @@ int main() {
         
         else if (record.type == Order){
             
-            readNCharactersFromStreamIntoArray(transactionFileStream, 20, record.itemName);
+            if(!(transactionFileStream >> record.itemName)){
+                throw runtime_error("Can't read item name");
+            }
             
             if(!(transactionFileStream >> record.itemQuantity)){
                 throw runtime_error("Can't read item quantity.");
@@ -174,15 +175,3 @@ bool openOutputStream(ofstream &stream, string fileName){
     return true;
 }
 
-//
-//  Reads N characters from a stream into a character array
-//
-
-void readNCharactersFromStreamIntoArray(ifstream &stream, int n, char*characters){
-    
-    for (int i = 0; i<n; i++) {
-        if(!(stream >> characters[i])){
-        throw runtime_error("Can't read a character from the stream.");
-        }
-    }
-}
