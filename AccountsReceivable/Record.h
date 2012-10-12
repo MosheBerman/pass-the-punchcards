@@ -44,8 +44,8 @@ public:
     //  per unit, or amount paid, depending on the type.
     //
     //  (Usually, it's dumb to use anything but pennies and ints
-    //  for money, but it's a HW assignment, not the next great
-    //  american app idea.)
+    //  for money, but it's a HW assignment, not the next Great
+    //  American App.)
     //
     
     double cashAmount;
