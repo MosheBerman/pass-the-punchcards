@@ -92,7 +92,7 @@ int main() {
         //  Get the customer number next
         //
         
-        if((!transactionFileStream >> customer.customerNumber)){
+        if(!(transactionFileStream >> customer.customerNumber)){
             throw runtime_error("Can't read customer number.");
         }
         
