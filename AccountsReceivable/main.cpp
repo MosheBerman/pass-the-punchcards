@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <exception>
 
 #include "Record.h"
 #include "Customer.h"
@@ -17,6 +18,7 @@
 using namespace std;
 
 //
+
 //  Function prototypes
 //
 
@@ -56,14 +58,16 @@ int main() {
         
         cerr << "Can't open file " << transactionFileName << ". " << '\n';
         
-        return 1;
+        throw runtime_error("Can't open transaction file.");        
+        
     }
     
     if(!openOutputStream(masterFileStream, masterFileName)){
         
         cerr << "Can't open file " << masterFileName << ". " << '\n';
         
-        return 1;
+
+        throw runtime_error("Can't open master file.");
     }
     
     //
@@ -72,9 +76,7 @@ int main() {
     
     
     
-    while (transactionFileStream.good()) {
-        
-        transactionFileStream >> transactionType;
+    while (transactionFileStream >> transactionType) {
         
         //
         //  Store the appropriate record type for later.
@@ -93,7 +95,9 @@ int main() {
         //  Get the customer number next
         //
         
-        transactionFileStream >> customer.customerNumber;
+        if((!transactionFileStream >> customer.customerNumber)){
+            throw runtime_error("Can't read customer number.");
+        }
         
         //
         //     Process a payment record
@@ -101,7 +105,9 @@ int main() {
         
         if (record.type == Payment) {
             
-            transactionFileStream >> record.cashAmount;
+            if(!(transactionFileStream >> record.cashAmount)){
+                throw runtime_error("Can't read payment amount.");
+            }
             
         }
         
@@ -113,8 +119,14 @@ int main() {
             
             readNCharactersFromStreamIntoArray(transactionFileStream, 20, record.itemName);
             
-            transactionFileStream >> record.itemQuantity;
-            transactionFileStream >> record.cashAmount;
+            if(!(transactionFileStream >> record.itemQuantity)){
+                throw runtime_error("Can't read item quantity.");
+            }
+            
+            
+            if(!(transactionFileStream >> record.cashAmount)){
+                throw runtime_error("Can't read price per unit.");
+            }
             
         }
         
@@ -162,9 +174,15 @@ bool openOutputStream(ofstream &stream, string fileName){
     return true;
 }
 
+//
+//  Reads N characters from a stream into a character array
+//
+
 void readNCharactersFromStreamIntoArray(ifstream &stream, int n, char*characters){
 
     for (int i = 0; i<n; i++) {
-        stream >> characters[n];
+        if(!(stream >> characters[n])){
+        throw runtime_error("Can't read a character from the stream.");
+        }
     }
 }
