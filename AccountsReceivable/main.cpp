@@ -179,9 +179,9 @@ bool openOutputStream(ofstream &stream, string fileName){
 //
 
 void readNCharactersFromStreamIntoArray(ifstream &stream, int n, char*characters){
-
+    
     for (int i = 0; i<n; i++) {
-        if(!(stream >> characters[n])){
+        if(!(stream >> characters[i])){
         throw runtime_error("Can't read a character from the stream.");
         }
     }
