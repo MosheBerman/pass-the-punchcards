@@ -132,8 +132,12 @@ int main() {
         //  We need to put the item into the master file
         //
         
-        record.description();
-        customer.description();
+        //
+        //  TODO: Open the master file, look for an entry for
+        //  the given customer.
+        //
+        //  If it exists, adjust the customer's 
+        //
         
     }
     
