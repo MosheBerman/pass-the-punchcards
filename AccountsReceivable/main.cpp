@@ -18,12 +18,13 @@
 using namespace std;
 
 //
-
 //  Function prototypes
 //
 
 bool openInputStream(ifstream &, string); 
 bool openOutputStream(ofstream &, string);
+void closeIntputStream(ifstream &stream);
+void closeOutputStream(ofstream &);
 
 int main() {
     
@@ -176,3 +177,18 @@ bool openOutputStream(ofstream &stream, string fileName){
     return true;
 }
 
+//
+//  Close the input stream
+//
+
+void closeIntputStream(ifstream &stream){
+    stream.close();
+}
+
+//
+//  Close the output stream
+//
+
+void closeOutputStream(ofstream &stream){
+    stream.close();
+}
