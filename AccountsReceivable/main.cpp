@@ -21,7 +21,7 @@ using namespace std;
 //  Function prototypes
 //
 
-bool openInputStream(ifstream &, string); 
+bool openInputStream(ifstream &, string);
 bool openOutputStream(ofstream &, string);
 void closeIntputStream(ifstream &stream);
 void closeOutputStream(ofstream &);
@@ -31,118 +31,158 @@ int main() {
     //
     //  Some variables to work with files
     //
-
+    
     string transactionFileName = "transactionAccountsReceivable";
     string masterFileName = "masterAccountsReceivable";
+    string newMasterFileName = "newMaster";
     ifstream transactionFileStream;
-    ofstream masterFileStream;
+    ifstream masterFileStream;
+    ofstream newMasterFileStream;
+
     
     //
-    //  Get the transaction type
+    //  A place to store the transaction type
     //
     
     char transactionType;
     
     //
-    //  Open the file streams
+    //  Variables for processing records
     //
     
-    if(!openInputStream(transactionFileStream, transactionFileName)){
-        
-        cerr << "Can't open file " << transactionFileName << ". " << '\n';
-        
-        throw runtime_error("Can't open transaction file.");        
-        
-    }
+    Customer customerMaster;
+    Record record;
+    Customer customer;
     
-    if(!openOutputStream(masterFileStream, masterFileName)){
+    //
+    //  Open the file streams...
+    //
+    
+    if(!openInputStream(masterFileStream, masterFileName)){
         
         cerr << "Can't open file " << masterFileName << ". " << '\n';
         
-
-        throw runtime_error("Can't open master file.");
+        throw runtime_error("Can't open transaction file.");
+    }
+    
+    if(!openOutputStream(newMasterFileStream, newMasterFileName)){
+        
+        cerr << "Can't open file " << masterFileName << ". " << '\n';
+        
+        throw runtime_error("Can't open transaction file.");
     }
     
     //
     //  Process the transactions
     //
     
-    while (transactionFileStream >> transactionType) {
+    
+    while (masterFileStream >> customerMaster.customerNumber) {
         
         //
-        //  Variables for processing records
+        //  Read the customer info in from the master file
         //
         
-        Record record;
-        Customer customer;
+        masterFileStream >> customerMaster.name;
+        
+        masterFileStream >> customerMaster.balanceDue;
         
         //
-        //  Store the appropriate record type for later.
-        //  I read it here because of the design of the
-        //  file format.
+        //  Open the transactions file
         //
         
-        if (transactionType == 'P') {
-            record.type = Payment;
-        }
-        else if(transactionType == 'O'){
-            record.type = Order;
-        }
-        
-        //
-        //  Get the customer number next
-        //
-        
-        if(!(transactionFileStream >> customer.customerNumber)){
-            throw runtime_error("Can't read customer number.");
-        }
-        
-        //
-        //     Process a payment record
-        //
-        
-        if (record.type == Payment) {
+        if(!openInputStream(transactionFileStream, transactionFileName)){
             
-            if(!(transactionFileStream >> record.cashAmount)){
-                throw runtime_error("Can't read payment amount.");
+            cerr << "Can't open file " << masterFileName << ". " << '\n';
+            
+            throw runtime_error("Can't open transaction file.");
+        }
+        
+        //
+        //  Look for matching transactions
+        //
+        
+        while (transactionFileStream >> transactionType) {
+            
+            //
+            //  Store the appropriate record type for later.
+            //  I read it here because of the design of the
+            //  file format.
+            //
+            
+            if (transactionType == 'P') {
+                record.type = Payment;
+            }
+            else if(transactionType == 'O'){
+                record.type = Order;
+            }
+            
+            //
+            //  Get the customer number next
+            //
+            
+            if(!(transactionFileStream >> customer.customerNumber)){
+                throw runtime_error("Can't read customer number.");
+            }
+            
+            //
+            //     Process a payment record
+            //
+            
+            if (record.type == Payment) {
+                
+                if(!(transactionFileStream >> record.cashAmount)){
+                    throw runtime_error("Can't read payment amount.");
+                }
+                
+                
+                record.cashAmount = 0;
+            }
+            
+            //
+            //  Process an Order record
+            //
+            
+            else if (record.type == Order){
+                
+                if(!(transactionFileStream >> record.itemName)){
+                    throw runtime_error("Can't read item name");
+                }
+                
+                if(!(transactionFileStream >> record.itemQuantity)){
+                    throw runtime_error("Can't read item quantity.");
+                }
+                
+                if(!(transactionFileStream >> record.cashAmount)){
+                    throw runtime_error("Can't read price per unit.");
+                }
+                
             }
             
         }
         
         //
-        //  Process an Order record
+        //  Close the transaction file
         //
         
-        else if (record.type == Order){
-            
-            if(!(transactionFileStream >> record.itemName)){
-                throw runtime_error("Can't read item name");
-            }
-            
-            if(!(transactionFileStream >> record.itemQuantity)){
-                throw runtime_error("Can't read item quantity.");
-            }
-            
-            if(!(transactionFileStream >> record.cashAmount)){
-                throw runtime_error("Can't read price per unit.");
-            }
-            
-        }
+        closeIntputStream(transactionFileStream);
         
         //
-        //  We need to put the item into the master file
+        //  Output the updated customer info
+        //  into the new file.
         //
         
-        //
-        //  TODO: Open the master file, look for an entry for
-        //  the given customer.
-        //
-        //  If it exists, adjust the customer's 
-        //
-        
+        newMasterFileStream << customerMaster.customerNumber;
+        newMasterFileStream << "\t";
+        newMasterFileStream << customerMaster.name;
+        newMasterFileStream << "\t";
+        newMasterFileStream << customer.balanceDue;
     }
     
+    closeOutputStream(newMasterFileStream);
     
+    closeIntputStream(masterFileStream);
+
     return 0;
 }
 
