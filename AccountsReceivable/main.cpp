@@ -86,7 +86,6 @@ int main() {
     //  Process the transactions
     //
     
-    
     while (masterFileStream >> customer.customerNumber) {
         
         //
@@ -96,6 +95,20 @@ int main() {
         masterFileStream >> customer.name;
         
         masterFileStream >> customer.balanceDue;
+        
+        //
+        //  Beging printing out the reciept
+        //
+        //  Start with the customer name and customer number...
+        //
+        
+        cout << "\n\n" << "Name:" << customer.name << '\t' << '\t' << "#" << customer.customerNumber << '\n' << '\n';
+        
+        //
+        //  ... continue with the balance...
+        //
+        
+        cout << '\t' << '\t' << '\t' <<'\t' << "Previous Balance: $" << setprecision(2) << fixed << customer.balanceDue << '\n' << '\n';
         
         //
         //  Look for matching transactions
@@ -139,8 +152,6 @@ int main() {
                 if(!(transactionFileStream >> record.cashAmount)){
                     throw runtime_error("Can't read payment amount.");
                 }  
-                
-                record.cashAmount = 0;
             }
             
             //
@@ -178,16 +189,35 @@ int main() {
                 
                 if (record.type == Order) {
                     customer.balanceDue += record.cashAmount*record.itemQuantity;
+                    
+                    //  ... print purchased item...
+                    
+                    cout << '\t';
+                    cout << record.itemName << " x " << record.itemQuantity;
+                    cout << setprecision(2) << fixed << " @ $" << record.cashAmount;
+                    cout << '\n';
                 }
                 else{
                     customer.balanceDue -= record.cashAmount;
+                    
+                    //  ...print payment...
+                    cout << '\t';
+                    cout << "Payment: " << setprecision(2) << fixed;
+                    cout << "$" << record.cashAmount << '\n';
                 }
             }
             
         }
         
         //
-        //  Reset the transaction file stream 
+        //  ... finally, print the customer's balance
+        //
+        
+        cout << '\n' << '\t' << '\t' << '\t' <<'\t';
+        cout << "Balance Due: " << setprecision(2) << fixed << "$" << customer.balanceDue << '\n';
+        
+        //
+        //  Reset the transaction file stream for the next customer
         //
         
         transactionFileStream.clear();
