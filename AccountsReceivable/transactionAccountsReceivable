@@ -9,11 +9,19 @@ O 1800 Cereal              20 3.50
 O 0731 Wooden_Trunk        1 500.00
 O 0731 Magic_Book          1 50.00
 O 0731 Magic_Book          1 70.00
-P 1129 Chocolate_Bar       80 100
+O 1129 Chocolate_Bar       80 100
 O 0731 Magic_Book          15 10.00
 P 1800 160.00
 P 0731 31755.00
 P 1800 10.00
 O 1990 Porsche             1 2000000
 O 1990 Lockpick_Set        2 17.50
-P 1990 2000030
+P 1990 2000030.00
+O 1990 Ultrabook           1 499
+O 2600 MacBook_Air         1 999
+O 2600 Oatmeal_Cookies     10 5
+O 1800 Bugle               1 279.99
+P 1990 2000.00
+O 1990 Takeout_Food        250 8.00
+P 2600 2600.00
+O 2600 Awesome_Tower_PC    1551.00
