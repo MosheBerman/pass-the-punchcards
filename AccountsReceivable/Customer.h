@@ -20,7 +20,7 @@ class Customer {
 public:
     int customerNumber;
     char name[20];
-    int balanceDue;
+    double balanceDue;
     int previousBalance;
     
     //
