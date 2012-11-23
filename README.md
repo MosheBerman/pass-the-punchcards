@@ -2,7 +2,7 @@ This is one of six homework assignments assigned by Professor Lowenthal in Brook
 
 The point of the assignment is to take data from File A (the transactions file), and merge it with data in File B (the accounts file). 
 
-You can [see the full assignment in my iCloud Photo Stream, here](http://www.icloud.com/photostream/#A1532ODWBszbz;97731ABF-4728-45D3-8358-EE3848C531EA).
+You can [see the full assignment in my iCloud Photo Stream, here](https://www.icloud.com/photostream/#A1532ODWBszbz).
 
 The idea is to read the data in from the transactions file and calculate the balance for each customer in the master file.
 
