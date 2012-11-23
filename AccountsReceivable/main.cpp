@@ -138,8 +138,7 @@ int main() {
                 
                 if(!(transactionFileStream >> record.cashAmount)){
                     throw runtime_error("Can't read payment amount.");
-                }
-                
+                }  
                 
                 record.cashAmount = 0;
             }
@@ -178,7 +177,7 @@ int main() {
                 //
                 
                 if (record.type == Order) {
-                    customer.balanceDue += record.cashAmount;
+                    customer.balanceDue += record.cashAmount*record.itemQuantity;
                 }
                 else{
                     customer.balanceDue -= record.cashAmount;
