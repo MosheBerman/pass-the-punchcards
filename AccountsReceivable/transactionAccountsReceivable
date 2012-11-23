@@ -24,4 +24,9 @@ O 1800 Bugle               1 279.99
 P 1990 2000.00
 O 1990 Takeout_Food        250 8.00
 P 2600 2600.00
-O 2600 Awesome_Tower_PC    1551.00
+O 2600 Awesome_Tower_PC    1 1551.00
+O 1211 Hammer              1 17.50
+O 1211 Nails               3000 0.02
+O 1211 4_by_4_wood         20 10.00
+O 1211 2_by_10_plank       10 15.00
+P 1211 1500.00
