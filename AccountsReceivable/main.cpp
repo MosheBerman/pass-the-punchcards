@@ -72,36 +72,44 @@ int main() {
     }
     
     //
+    //  Open the transactions file
+    //
+    
+    if(!openInputStream(transactionFileStream, transactionFileName)){
+        
+        cerr << "Can't open file " << masterFileName << ". " << '\n';
+        
+        throw runtime_error("Can't open transaction file.");
+    }
+    
+    //
     //  Process the transactions
     //
     
     
-    while (masterFileStream >> customer.customerNumber) {
+    while (masterFileStream) {
         
         //
         //  Read the customer info in from the master file
         //
+        
+        masterFileStream >> customer.customerNumber;
         
         masterFileStream >> customer.name;
         
         masterFileStream >> customer.balanceDue;
         
         //
-        //  Open the transactions file
-        //
-        
-        if(!openInputStream(transactionFileStream, transactionFileName)){
-            
-            cerr << "Can't open file " << masterFileName << ". " << '\n';
-            
-            throw runtime_error("Can't open transaction file.");
-        }
-        
-        //
         //  Look for matching transactions
         //
         
-        while (transactionFileStream >> transactionType) {
+        while (transactionFileStream) {
+            
+            //
+            //  Read the transactionType
+            //
+            
+            transactionFileStream >> transactionType;
             
             //
             //  Buffer for the transaction's customer number
@@ -185,11 +193,14 @@ int main() {
                 }
             }
             
-
-            
-
-            
         }
+        
+        //
+        //  Reset the transaction file stream 
+        //
+        
+        transactionFileStream.clear();
+        transactionFileStream.seekg(0);
         
         //
         //  Output the updated customer info
@@ -202,18 +213,10 @@ int main() {
         newMasterFileStream << "\t";
         newMasterFileStream << customer.balanceDue;
         
-        //
-        //  Reset the file stream
-        //closeInputStream
-        
-        transactionFileStream.clear();
-        transactionFileStream.seekg(0);
+
         
     }
     
-    
-
-
     //
     //  Close the transaction file
     //
