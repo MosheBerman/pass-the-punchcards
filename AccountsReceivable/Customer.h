@@ -21,6 +21,7 @@ public:
     int customerNumber;
     char name[20];
     int balanceDue;
+    int previousBalance;
     
     //
     //  This method logs out a description of the class.
@@ -35,6 +36,7 @@ public:
         cout << "Customer:\n---\nCustomer Number: " << customerNumber;
         cout << "\nName: " << name;
         cout << "\nBalance: " << setprecision(2) << fixed << balanceDue;
+        cout << "\nPrevious \nBalance: " << setprecision(2) << fixed << previousBalance;
         cout << '\n';
     }
 };
