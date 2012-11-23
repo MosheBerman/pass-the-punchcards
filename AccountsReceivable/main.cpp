@@ -50,9 +50,8 @@ int main() {
     //  Variables for processing records
     //
     
-    Customer customerMaster;
-    Record record;
     Customer customer;
+    Record record;
     
     //
     //  Open the file streams...
@@ -77,15 +76,15 @@ int main() {
     //
     
     
-    while (masterFileStream >> customerMaster.customerNumber) {
+    while (masterFileStream >> customer.customerNumber) {
         
         //
         //  Read the customer info in from the master file
         //
         
-        masterFileStream >> customerMaster.name;
+        masterFileStream >> customer.name;
         
-        masterFileStream >> customerMaster.balanceDue;
+        masterFileStream >> customer.balanceDue;
         
         //
         //  Open the transactions file
@@ -105,6 +104,12 @@ int main() {
         while (transactionFileStream >> transactionType) {
             
             //
+            //  Buffer for the transaction's customer number
+            //
+            
+            int customerNumberPerTransaction = NULL;
+            
+            //
             //  Store the appropriate record type for later.
             //  I read it here because of the design of the
             //  file format.
@@ -121,7 +126,7 @@ int main() {
             //  Get the customer number next
             //
             
-            if(!(transactionFileStream >> customer.customerNumber)){
+            if(!(transactionFileStream >> customerNumberPerTransaction)){
                 throw runtime_error("Can't read customer number.");
             }
             
@@ -159,6 +164,26 @@ int main() {
                 
             }
             
+            //
+            //  If this transaction applies to this customer,
+            //  then apply it to the customer.
+            //
+            
+            if (customer.customerNumber == customerNumberPerTransaction) {
+             
+                //
+                //  If we're adding an order, we need to add the
+                //  amount due to the customer's balance.
+                //  Otherwise, subtract it.
+                //
+                
+                if (record.type == Order) {
+                    customer.balanceDue += record.cashAmount;
+                }
+                else{
+                    customer.balanceDue -= record.cashAmount;
+                }
+            }
         }
         
         //
@@ -172,9 +197,9 @@ int main() {
         //  into the new file.
         //
         
-        newMasterFileStream << customerMaster.customerNumber;
+        newMasterFileStream << customer.customerNumber;
         newMasterFileStream << "\t";
-        newMasterFileStream << customerMaster.name;
+        newMasterFileStream << customer.name;
         newMasterFileStream << "\t";
         newMasterFileStream << customer.balanceDue;
     }
