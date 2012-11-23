@@ -87,13 +87,11 @@ int main() {
     //
     
     
-    while (masterFileStream) {
+    while (masterFileStream >> customer.customerNumber) {
         
         //
         //  Read the customer info in from the master file
         //
-        
-        masterFileStream >> customer.customerNumber;
         
         masterFileStream >> customer.name;
         
@@ -103,14 +101,8 @@ int main() {
         //  Look for matching transactions
         //
         
-        while (transactionFileStream) {
-            
-            //
-            //  Read the transactionType
-            //
-            
-            transactionFileStream >> transactionType;
-            
+        while (transactionFileStream >> transactionType) {
+                        
             //
             //  Buffer for the transaction's customer number
             //
@@ -212,8 +204,7 @@ int main() {
         newMasterFileStream << customer.name;
         newMasterFileStream << "\t";
         newMasterFileStream << customer.balanceDue;
-        
-
+        newMasterFileStream << "\n";
         
     }
     
