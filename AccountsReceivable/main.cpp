@@ -23,7 +23,7 @@ using namespace std;
 
 bool openInputStream(ifstream &, string);
 bool openOutputStream(ofstream &, string);
-void closeIntputStream(ifstream &stream);
+void closeInputStream(ifstream &stream);
 void closeOutputStream(ofstream &);
 
 int main() {
@@ -184,13 +184,12 @@ int main() {
                     customer.balanceDue -= record.cashAmount;
                 }
             }
+            
+
+            
+
+            
         }
-        
-        //
-        //  Close the transaction file
-        //
-        
-        closeIntputStream(transactionFileStream);
         
         //
         //  Output the updated customer info
@@ -202,12 +201,27 @@ int main() {
         newMasterFileStream << customer.name;
         newMasterFileStream << "\t";
         newMasterFileStream << customer.balanceDue;
+        
+        //
+        //  Reset the file stream
+        //closeInputStream
+        
+        transactionFileStream.clear();
+        transactionFileStream.seekg(0);
+        
     }
     
+    
+
+
+    //
+    //  Close the transaction file
+    //
+    
+    closeInputStream(transactionFileStream);
+    closeInputStream(masterFileStream);
     closeOutputStream(newMasterFileStream);
     
-    closeIntputStream(masterFileStream);
-
     return 0;
 }
 
@@ -246,7 +260,7 @@ bool openOutputStream(ofstream &stream, string fileName){
 //  Close the input stream
 //
 
-void closeIntputStream(ifstream &stream){
+void closeInputStream(ifstream &stream){
     stream.close();
 }
 
