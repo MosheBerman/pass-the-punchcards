@@ -2,7 +2,7 @@ This is one of six homework assignments assigned by Professor Lowenthal in Brook
 
 The point of the assignment is to take data from File A (the transactions file), and merge it with data in File B (the accounts file). 
 
-There are 2 types of transactions that can be in the transactions file: Order, or Payment. Each line has either one or the other. The contents of the line is denoted by an O or a P at the start of the line. After that, there's a 4 digit customer number. Then, orders will have an item, a quantity, and a price. Payments will have an amount. 
+You can [see the full assignment in my iCloud Photo Stream, here](http://www.icloud.com/photostream/#A1532ODWBszbz;97731ABF-4728-45D3-8358-EE3848C531EA).
 
 The idea is to read the data in from the transactions file and calculate the balance for each customer in the master file.
 
