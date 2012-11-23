@@ -32,6 +32,7 @@
 		4615C93316279FA70030177F /* transactionAccountsReceivable */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = transactionAccountsReceivable; sourceTree = "<group>"; };
 		4615C93C1627A9050030177F /* Record.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Record.h; sourceTree = "<group>"; };
 		4615C93E1627A9210030177F /* Customer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Customer.h; sourceTree = "<group>"; };
+		468FE534165F30AF00FF27FD /* Output */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Output; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +70,7 @@
 				4615C93E1627A9210030177F /* Customer.h */,
 				4615C93216279F8E0030177F /* masterAccountsReceivable */,
 				4615C93316279FA70030177F /* transactionAccountsReceivable */,
+				468FE534165F30AF00FF27FD /* Output */,
 				4615C92B16279EFD0030177F /* AccountsReceivable.1 */,
 			);
 			path = AccountsReceivable;
